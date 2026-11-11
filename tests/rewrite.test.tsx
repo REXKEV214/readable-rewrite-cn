@@ -276,3 +276,34 @@ test('another plugin\'s reply buttons join these on a single row', { options: OP
   expect(otherPressed).toBe(1)
   await ui.unmount()
 })
+
+test('/readable qwen leaves an earlier reply on the original until its button is pressed', { options: OPTIONS }, async ($, on) => {
+  const { asks, clock } = engine(on)
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  await $.session.append(reply('row-old'))
+  await $.command.run({ command: 'readable', args: 'qwen' } as never)
+  await clock.settle()
+  const ui = await $.ui.mount(block('desktop', 'row-old'))
+  expect((await ui.find({ type: 'Markdown' }))?.text).toContain(ORIGINAL)
+  expect(JSON.stringify(await ui.find({ type: 'Button', text: '通义 改写' }))).toContain('secondary')
+  expect(asks).toEqual([])
+
+  // One press rewrites it.
+  await press(ui, '通义 改写')
+  await clock.settle()
+  expect((await ui.find({ type: 'Markdown' }))?.text).toContain(BY_QWEN)
+  expect(asks.length).toBe(1)
+  await ui.unmount()
+})
+
+test('a user_template without {{text}} gets the reply appended', { options: { ...OPTIONS, user_template: '把下面的文字改写得更易读' } }, async ($, on) => {
+  const { asks, clock } = engine(on)
+  await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+  await $.session.append(reply('row-t'))
+  const ui = await $.ui.mount(block('desktop', 'row-t'))
+  await press(ui, '通义 改写')
+  await clock.settle()
+  const messages = asks[0]?.body.messages as { role: string; content: string }[]
+  expect(messages[1]?.content).toBe(`把下面的文字改写得更易读\n\n${ORIGINAL}`)
+  await ui.unmount()
+})

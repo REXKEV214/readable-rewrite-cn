@@ -52,7 +52,7 @@ claude plugin install readable-rewrite-cn --marketplace REXKEV214/readable-rewri
 | `user_template` | user prompt 模板，`{{text}}` 换成回复原文 | 见 `plugin.json` |
 | `timeout_seconds` | 单次请求超时（秒） | `120` |
 
-Key 和模型 ID 没填时，点按钮只提示「未配置」，不发请求。`*_extra_body` 的默认值用来关闭思考模式，模型不认这个参数、报错时清空即可。
+Key 和模型 ID 没填时，点按钮只提示「未配置」，不发请求。`*_extra_body` 的默认值用来关闭思考模式，模型不认这个参数、报错时清空即可。`user_template` 里没有 `{{text}}` 时，回复原文接在模板后面。
 
 用命令行填写（Key 不会留在 shell 历史里；没写的项保持原值）：
 
@@ -87,7 +87,7 @@ cp .env.example ~/.claude/plugins/data/readable-rewrite-cn-readable-rewrite-cn/.
 
 - 点回复下面的 **通义 改写** 或 **豆包 改写**，显示该模型的改写版；再点一下回到原文；点另一个按钮换成另一个模型的改写版。
 - 改写失败时按钮不亮，旁边显示原因，再点一次重试。
-- `/readable qwen` 或 `/readable doubao`：之后每条新回复都自动用该模型改写。
+- `/readable qwen` 或 `/readable doubao`：之后每条新回复都自动用该模型改写；之前的回复不变，点它的按钮才改写。
 - `/readable off`：恢复默认，只有点按钮才改写。
 - `/readable`：查看当前模式。
 

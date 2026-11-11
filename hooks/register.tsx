@@ -136,7 +136,7 @@ async function attempt($: EngineInterface, options: PluginOptions, model: Rewrit
     stream: false,
     messages: [
       ...(system ? [{ role: 'system', content: system }] : []),
-      { role: 'user', content: template.split('{{text}}').join(original) },
+      { role: 'user', content: template.includes('{{text}}') ? template.split('{{text}}').join(original) : `${template}\n\n${original}` },
     ],
   }
 
@@ -265,7 +265,9 @@ export const register: Register = (on, options) => {
 
     const mode = await read($, modeAtom)
     const { Box, Text, Button } = $.ui.resolve(e)
-    const view: View = entry.view ?? mode
+    // The global mode picks a provider only for a reply that has its rewrite:
+    // one stored before the mode was set stays the original until pressed.
+    const view: View = entry.view ?? (mode !== 'original' && entry[mode] ? mode : 'original')
     const shown = view === 'original' ? undefined : entry[view]
 
     // Each provider's button is a toggle: lit while its rewrite is shown,

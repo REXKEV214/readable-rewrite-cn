@@ -52,7 +52,7 @@ Settings live in `userConfig` in [`.claude-plugin/plugin.json`](.claude-plugin/p
 | `user_template` | User prompt template; `{{text}}` is replaced with the reply | see `plugin.json` |
 | `timeout_seconds` | Per-request timeout in seconds | `120` |
 
-Until a key and model ID are set, pressing a button shows a "not configured" message and sends nothing. The `*_extra_body` defaults turn off thinking mode; clear them if your model rejects those parameters.
+Until a key and model ID are set, pressing a button shows a "not configured" message and sends nothing. The `*_extra_body` defaults turn off thinking mode; clear them if your model rejects those parameters. If `user_template` has no `{{text}}`, the reply is appended after it.
 
 Set values from the command line (the key stays out of your shell history; keys you omit keep their current values):
 
@@ -87,7 +87,7 @@ Notes:
 
 - Press **通义 改写** or **豆包 改写** under a reply to show that model's rewrite. Press it again to return to the original. Pressing the other button switches to the other model's rewrite.
 - If a rewrite fails, the button stays off and the reason is shown next to it. Press again to retry.
-- `/readable qwen` or `/readable doubao`: rewrite every new reply automatically with that model.
+- `/readable qwen` or `/readable doubao`: rewrite every new reply automatically with that model. Earlier replies stay as they are until you press their button.
 - `/readable off`: back to the default (rewrite only on button press).
 - `/readable`: show the current mode.
 

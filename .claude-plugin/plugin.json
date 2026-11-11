@@ -1,6 +1,6 @@
 {
   "name": "readable-rewrite-cn",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Rewrites an assistant reply into easier-to-read Chinese through your own Qwen (DashScope) or Doubao (Volcengine Ark) API, shown under the reply on request; the model's context keeps the original.",
   "types": "./types/index.d.ts",
   "userConfig": {
