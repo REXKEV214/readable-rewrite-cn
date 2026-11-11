@@ -1,0 +1,13 @@
+{
+  "name": "readable-rewrite-cn",
+  "owner": {
+    "name": "Kevin"
+  },
+  "description": "readable-rewrite-cn: easier-to-read Chinese rewrites of Claude Code replies through Qwen or Doubao.",
+  "plugins": [
+    {
+      "name": "readable-rewrite-cn",
+      "source": "./"
+    }
+  ]
+}

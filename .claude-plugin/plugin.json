@@ -1,0 +1,76 @@
+{
+  "name": "readable-rewrite-cn",
+  "version": "0.2.0",
+  "description": "Rewrites an assistant reply into easier-to-read Chinese through your own Qwen (DashScope) or Doubao (Volcengine Ark) API, shown under the reply on request; the model's context keeps the original.",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "qwen_api_key": {
+      "type": "string",
+      "title": "通义 API Key",
+      "description": "阿里云百炼 / DashScope 的 API Key；留空则读 ~/.claude/plugins/data/readable-rewrite-cn-readable-rewrite-cn/.env 或环境变量里的 DASHSCOPE_API_KEY",
+      "sensitive": true,
+      "default": ""
+    },
+    "qwen_model": {
+      "type": "string",
+      "title": "通义模型 ID",
+      "description": "百炼控制台里的模型 ID，例如 qwen3.7 flash 对应的 ID",
+      "default": ""
+    },
+    "qwen_base_url": {
+      "type": "string",
+      "title": "通义 Base URL",
+      "description": "OpenAI 兼容接口地址，不含 /chat/completions",
+      "default": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    "qwen_extra_body": {
+      "type": "string",
+      "title": "通义额外请求参数（JSON）",
+      "description": "合并进请求体，例如关闭思考：{\"enable_thinking\": false}；留空则不加",
+      "default": "{\"enable_thinking\": false}"
+    },
+    "ark_api_key": {
+      "type": "string",
+      "title": "火山方舟 API Key",
+      "description": "火山引擎方舟的 API Key；留空则读 ~/.claude/plugins/data/readable-rewrite-cn-readable-rewrite-cn/.env 或环境变量里的 ARK_API_KEY",
+      "sensitive": true,
+      "default": ""
+    },
+    "ark_model": {
+      "type": "string",
+      "title": "豆包模型 ID",
+      "description": "方舟控制台里的模型 ID 或接入点 ep-xxx，例如 Doubao-Seed-2.0-Mini 对应的 ID",
+      "default": ""
+    },
+    "ark_base_url": {
+      "type": "string",
+      "title": "火山方舟 Base URL",
+      "description": "OpenAI 兼容接口地址，不含 /chat/completions",
+      "default": "https://ark.cn-beijing.volces.com/api/v3"
+    },
+    "ark_extra_body": {
+      "type": "string",
+      "title": "豆包额外请求参数（JSON）",
+      "description": "合并进请求体，例如关闭思考：{\"thinking\": {\"type\": \"disabled\"}}；留空则不加",
+      "default": "{\"thinking\": {\"type\": \"disabled\"}}"
+    },
+    "system_prompt": {
+      "type": "string",
+      "title": "System prompt",
+      "description": "发给改写模型的 system prompt",
+      "default": "你是一名润色专家，擅长将晦涩复杂的文本转化为清晰、易于理解的表达。"
+    },
+    "user_template": {
+      "type": "string",
+      "title": "User prompt 模板",
+      "description": "{{text}} 会被替换成 agent 回复的原文",
+      "default": "<原文>\n{{text}}\n</原文>\n\n在不改变原意的情况下，把上面这段文字用更好理解的中文来表述（保留原文中的专业名词以及人名）。只返回改写后的文字，不要任何解释、前言，也不要用代码框包裹。"
+    },
+    "timeout_seconds": {
+      "type": "number",
+      "title": "请求超时（秒）",
+      "description": "单次改写请求的超时时间",
+      "default": 120
+    }
+  }
+}
